@@ -90,6 +90,7 @@ cd CLAIRE/app/
 python DEMO.py
 ```
 你可以测试一条或者多条 rxn 的 EC
+
 **Embedding：**
 测试一条：传入字符串
 ```python
