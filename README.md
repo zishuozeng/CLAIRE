@@ -4,7 +4,7 @@ Contrastive Learning-based AnnotatIon for Reaction's Ec number
 
 ## 1.安装环境
 ```
-cd CLCLAIRE/app/
+cd CLAIRE/app/
 conda create -n CLearning python==3.10
 conda activate CLearning
 pip install -r requirements.txt
