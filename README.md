@@ -19,16 +19,16 @@ conda install pytorch==1.11.0 cudatoolkit=11.3 -c pytorch (GPU)
 文件夹目录结构如下图所示：
 ```
 - CLAIRE
-	- app
-		-data 
-			-inputs
-			-model
-			-pretrained
-		-results
-			-inputs
-				-pred_results
-		-src
-			-CLAIRE
+    - app
+        -data 
+	    -inputs
+	    -model
+	    -pretrained
+        -results
+	    -inputs
+		-pred_results
+        -src
+	    -CLAIRE
 ```
 ## 3.Embedding
 ### 3.1 运行环境
