@@ -66,7 +66,9 @@ print(len(esm_emb_dict))
 ## 4.数据处理
 运行 `CLAIRE/app/data_preprocessing.py` 构建`model_lookup.pkl` 、` label.pkl`和`emb_eam.pkl`。
 你可以根据预测EC的一位( EC:1 )，两位( EC:1.2 )或三位( EC:1.2.1 )来生成 labels 和 emb_esm。
+
 **model_lookup**
+
 ```
 model_lookup.shape 	# [len(rxn_list), 256]
 Type(model_lookup)  # numpy
