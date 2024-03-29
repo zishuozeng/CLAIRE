@@ -92,6 +92,7 @@ python DEMO.py
 你可以测试一条或者多条 rxn 的 EC
 
 **Embedding：**
+
 测试一条：传入字符串
 ```python
 example_rxn = "C/C(C=O)=C\CC/C(C)=C/C=O.NC(=O)c1ccc[n+]([C@@H]2O[C@H](COP(=O)([O-])OP(=O)([O-])OC[C@H]3O[C@@H](n4cnc5c(N)ncnc54)[C@H](O)[C@@H]3O)[C@@H](O)[C@H]2O)c1.[H+].O>>COC(=O)CCCCCCCC=O"
