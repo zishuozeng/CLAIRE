@@ -115,7 +115,8 @@ infer_maxsep(train_data, test_data, train_labels, test_tags, test_labels, pretra
 ```
 python CLAIRE/app/train-triplet_pred_rxn_EC.py
 ```
-数据集的构建我们使用随机采样的方式：从样本集中随机选取一个样本作为 `anchor` ，根据 anchor 属性选择正负样本，即 anchor 为正样本， 则在 正样本集中随机选择一个样本作为 `positive`， 在负样本集中随机选择一个样本作为 `negative` ；反之， anchor 为负样本，则 `positive` 从负样本集中随机选择， `negative` 从正样本集中随机选择。
+数据集的构建我们使用随机采样的方式：构建esm_emb字典 `{‘EC1’:[tensor1, tensor2, ... ,], ’EC2’:[tensor1, tensor2, ... ] ... .....}`,从esm_emb中随机选取一个 EC 作为 `anchor_id` ，从 EC==anchor_id 的列表中随机选择一个样本作为 `anchor`， 根据 anchor_id 选择正负样本，即在 anchor_id 的列表中选择一个样本作为 `positive`， 随机选择一个非 anchor_id 的 EC ，并在该列表中随机选择一个样本为 `negative`。
+我们训练一个三层的神经网络， 使 anchor 和 positive 之间的距离最小化， 和 negative 之间的距离最大化。
 
 我们使用的损失函数是 `TripletMarginLoss`
 设置 epoch 为 2000， batchsize 为 6000
