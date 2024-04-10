@@ -80,7 +80,7 @@ def write_topk_choices(df, csv_name,topk=None, gmm = None):
         csvwriter.writerow(ec)
     return
 
-def infer_maxsep(train_data, test_data, train_tags, test_tags, test_labels, pretrained_model, report_metrics = True, topk=3,
+def infer(train_data, test_data, train_tags, test_tags, test_labels, pretrained_model, report_metrics = True, topk=3,
                   gmm = None):
     use_cuda = torch.cuda.is_available()
     device = torch.device("cuda:0" if use_cuda else "cpu")
@@ -160,10 +160,7 @@ if __name__ == '__main__':
 
 
     pretrained_model = './data/model/pred_rxn_EC12/random_10-4_triplet2000_final.pth'
-    infer_maxsep(train_data, test_data, train_labels, test_tags,test_labels, pretrained_model, report_metrics=True, topk=3, gmm = './data/pretrained/gmm_ensumble.pkl')
-    # infer_maxsep(train_data, test_data, labels, test_tags, report_metrics=False, pretrained=False, model_name='tmp_triplet', gmm = './data/pretrained/gmm_ensumble.pkl')
-
-
+    infer(train_data, test_data, train_labels, test_tags,test_labels, pretrained_model, report_metrics=True, topk=3, gmm = './data/pretrained/gmm_ensumble.pkl')
 
 
 
