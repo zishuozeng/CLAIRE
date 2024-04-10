@@ -42,7 +42,7 @@ pip install rxnfp
 ### 3.2 使用
 运行 `CLAIRE/app/embedding.py`获取 `rxn_ec_emb`，embedding的维度为256。
 `example_rxn` 可替换为你的 rxn 列表。
-生成的 embeddings 保存至 `CLAIRE/app/data/inputs/rxn_ec_emb.pkl`
+生成的 embeddings 保存至 `CLAIRE/app/data/inputs/rxn_ec_emb.pkl`。
 ```python
 from rxnfp.transformer_fingerprints import (
     RXNBERTFingerprintGenerator, get_default_model_and_tokenizer, generate_fingerprints
@@ -115,28 +115,28 @@ infer_maxsep(train_data, test_data, train_labels, test_tags, test_labels, pretra
 ```
 python CLAIRE/app/train-triplet_pred_rxn_EC.py
 ```
-训练数据集的构建采用随机采样的方式：构建esm_emb字典 `{‘EC1’:[tensor1, tensor2, ... ,], ’EC2’:[tensor1, tensor2, ... ] ... .....}`,并从样本集中随机选择一个embedding作为`anchor`，从esm_emb中与anchor相同的EC里随机抽样一个embedding作为`positive`，从与anchor的不同的EC里随机抽样一个embedding作为`negative`，从而构建一个三元组`<anchor, positive, negative>`。其中，样本集中的每个样本都会作为anchor被选择。
+训练数据集的构建采用随机采样的方式：构建 esm_emb 字典 `{‘EC1’:[tensor1, tensor2, ... ,], ’EC2’:[tensor1, tensor2, ... ] ... .....}`,并从样本集中随机选择一个 embedding 作为`anchor`，从 esm_emb 中与 anchor 相同的 EC 里随机抽样一个 embedding 作为 `positive`，从与 anchor 的不同的EC里随机抽样一个 embedding 作为 `negative`，从而构建一个三元组 `<anchor, positive, negative>`。其中，样本集中的每个样本都会作为 anchor 被选择。
 我们训练一个三层的神经网络， 使 anchor 和 positive 之间的距离最小化， 和 negative 之间的距离最大化。
 
-我们使用的损失函数是 `TripletMarginLoss`
-设置 epoch 为 2000， batchsize 为 6000
+我们使用的损失函数是 `TripletMarginLoss`。
+设置 epoch 为 2000， batchsize 为 6000。
 
-训练好的模型保存至：`CLAIRE/app/data/model`
+训练好的模型保存至：`CLAIRE/app/data/model`。
 
 ## 7.inference
-运行 `CLAIRE/app/inference_EC.py`
-导入`CLAIRE/app/data_preprocessing.py` 处理好保存的训练和测试数据
+运行 `CLAIRE/app/inference_EC.py`。
+导入`CLAIRE/app/data_preprocessing.py` 处理好保存的训练和测试数据。
 **Inference：**
-预训练模型位于：`CLAIRE/app/data/model`
-你可以根据预测EC的一位( EC:1 )，两位( EC:1.2 )或三位( EC:1.2.1 )来选择预训练模型
+预训练模型位于：`CLAIRE/app/data/model`。
+你可以根据预测EC的一位( EC:1 )，两位( EC:1.2 )或三位( EC:1.2.1 )来选择预训练模型。
 同理训练数据也相应导入 EC 为一位、两位或三位的 labels。
-导入训练数据(`model_lookup_train.pkl`)，与测试数据计算距离矩阵
- report_metrics = true 表示对预测结果进行评估
+导入训练数据(`model_lookup_train.pkl`)，与测试数据计算距离矩阵。
+ report_metrics = true 表示对预测结果进行评估。
 ```python
 infer(train_data, test_data, train_labels, test_tags, test_labels, pretrained_model, report_metrics=True, gmm = './data/pretrained/gmm_ensumble.pkl')
 ```
 在评估阶段，我们使用GMM（高斯混合模型）测试查询化学式与预测的EC number之间的距离是否显著小于随机抽样化学式与随机抽样EC number之间的距离。测试的显著性越高，我们对模型预测的EC number的置信度就越高。
-预测结果存储在 `CLAIRE/app/results/test_maxsep.csv `中
+预测结果存储在 `CLAIRE/app/results/test_maxsep.csv `中。
 输出示例：
 ```
 rxn_0,EC:4.1.1/0.9918,EC:1.10.1/0.2199,EC:1.1.1/0.0010
