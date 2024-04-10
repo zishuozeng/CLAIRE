@@ -115,7 +115,7 @@ infer_maxsep(train_data, test_data, train_labels, test_tags, test_labels, pretra
 ```
 python CLAIRE/app/train-triplet_pred_rxn_EC.py
 ```
-数据集的构建我们使用随机采样的方式：构建esm_emb字典 `{‘EC1’:[tensor1, tensor2, ... ,], ’EC2’:[tensor1, tensor2, ... ] ... .....}`,从esm_emb中随机选取一个 EC 作为 `anchor_id` ，从 EC==anchor_id 的列表中随机选择一个样本作为 `anchor`， 根据 anchor_id 选择正负样本，即在 anchor_id 的列表中选择一个样本作为 `positive`， 随机选择一个非 anchor_id 的 EC ，并在该列表中随机选择一个样本为 `negative`。
+训练数据集的构建采用随机采样的方式：构建esm_emb字典 `{‘EC1’:[tensor1, tensor2, ... ,], ’EC2’:[tensor1, tensor2, ... ] ... .....}`,并从样本集中随机选择一个embedding作为`anchor`，从esm_emb中与anchor相同的EC里随机抽样一个embedding作为`positive`，从与anchor的不同的EC里随机抽样一个embedding作为`negative`，从而构建一个三元组`<anchor, positive, negative>`。其中，样本集中的每个样本都会作为anchor被选择。
 我们训练一个三层的神经网络， 使 anchor 和 positive 之间的距离最小化， 和 negative 之间的距离最大化。
 
 我们使用的损失函数是 `TripletMarginLoss`
@@ -133,17 +133,15 @@ python CLAIRE/app/train-triplet_pred_rxn_EC.py
 导入训练数据(`model_lookup_train.pkl`)，与测试数据计算距离矩阵
  report_metrics = true 表示对预测结果进行评估
 ```python
-# EC calling results using maximum separation
-infer_maxsep(train_data, test_data, train_labels, test_tags, test_labels, pretrained_model, report_metrics=True, gmm = './data/pretrained/gmm_ensumble.pkl')
+infer(train_data, test_data, train_labels, test_tags, test_labels, pretrained_model, report_metrics=True, gmm = './data/pretrained/gmm_ensumble.pkl')
 ```
-在评估阶段，我们引用的 [*CLEAN*](https://github.com/tttianhao/CLEAN/) 的最大分离推理，这是一种贪婪的方法，它优先考虑在到查询序列的成对距离方面与其他 EC 编号具有最大分离的 EC 编号。 给出确定性的预测，通常在精度和召回率方面表现出色。
-
+在评估阶段，我们使用GMM（高斯混合模型）测试查询化学式与预测的EC number之间的距离是否显著小于随机抽样化学式与随机抽样EC number之间的距离。测试的显著性越高，我们对模型预测的EC number的置信度就越高。
 预测结果存储在 `CLAIRE/app/results/test_maxsep.csv `中
 输出示例：
 ```
-rxn_0,EC:4.1.1/0.9918	
-rxn_1,EC:2.3.1/0.9963,EC:4.2.1/0.0025,EC:3.1.2/0.0017,EC:1.1.1/0.0010
-rxn_2,EC:3.5.4/0.9832
-rxn_3,EC:2.3.1/0.8270,EC:6.2.1/0.2903,EC:4.2.1/0.0355,EC:2.4.1/0.0119
+rxn_0,EC:4.1.1/0.9918,EC:1.10.1/0.2199,EC:1.1.1/0.0010
+rxn_1,EC:2.3.1/0.9963,EC:4.2.1/0.0025,EC:3.1.2/0.0017
+rxn_2,EC:3.5.4/0.9832,EC:2.4.1/0.0119,EC:1.8.1/0.0080
+rxn_3,EC:2.3.1/0.8270,EC:6.2.1/0.2903,EC:4.2.1/0.0355
 ```
-其中第一列（rxn_0）为 rxn 编号，代表的 rxn 序列， 第二列 （EC:4.1.1/0.9918） 是预测的 EC 数 4.1.1 和 rxn_0 的簇中心之间的成对距离。
+其中第一列（rxn_0）为 rxn 编号，代表的 rxn 序列， 第二列 （EC:4.1.1/0.9918） 是预测的 EC number 4.1.1 和 rxn_0 的实际的 EC number 相同的置信度。
