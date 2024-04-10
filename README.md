@@ -119,6 +119,7 @@ python CLAIRE/app/train-triplet_pred_rxn_EC.py
 我们训练一个三层的神经网络， 使 anchor 和 positive 之间的距离最小化， 和 negative 之间的距离最大化。
 
 我们使用的损失函数是 `TripletMarginLoss`。
+
 设置 epoch 为 2000， batchsize 为 6000。
 
 训练好的模型保存至：`CLAIRE/app/data/model`。
@@ -137,6 +138,7 @@ infer(train_data, test_data, train_labels, test_tags, test_labels, pretrained_mo
 ```
 在评估阶段，我们使用GMM（高斯混合模型）测试查询化学式与预测的EC number之间的距离是否显著小于随机抽样化学式与随机抽样EC number之间的距离。测试的显著性越高，我们对模型预测的EC number的置信度就越高。
 预测结果存储在 `CLAIRE/app/results/test_maxsep.csv `中。
+
 输出示例：
 ```
 rxn_0,EC:4.1.1/0.9918,EC:1.10.1/0.2199,EC:1.1.1/0.0010
