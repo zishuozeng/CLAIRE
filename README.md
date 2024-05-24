@@ -1,73 +1,49 @@
 ﻿# DEMO
-你可以通过运行 `CLAIRE/DEMO.py` 初步使用
 
-**1.环境配置**
+This repository includes codes to replicate the results in paper
+
+CLAIRE: A Contrastive Learning-based Predictor for EC number of chemical reactions
+
+as well as demonstrates how to use CLAIRE to predict EC number for chemical reactions. 
+
+**1.Environment setup**
+
+In terminal
 ```
 conda activate rxnfp
 cd CLAIRE/
-python DEMO.py
 ```
 
-**2.导入训练数据**
-```python
-### train data
-# train_embedding 512-dim
-train_file = './dev/data/model_lookup_train.pkl'
-with open (train_file, 'rb') as file:
-    train_data = pickle.load(file)
-
-# train_labels
-labels_file = './dev/data/pred_rxn_EC123/labels_train_ec3.pkl'
-with open (labels_file, 'rb') as file:
-    train_labels = pickle.load(file)
+In Python, import the relevant packages
+```
+from dev.prediction.inference_EC import infer_maxsep
+import pickle
+import numpy as np
+import pandas as pd
+from rxnfp.transformer_fingerprints import (
+    RXNBERTFingerprintGenerator, get_default_model_and_tokenizer, generate_fingerprints
+)
 ```
 
-**3.你可以使用我们的测试数据进行初步测试**
-```python
-### use our test data
-# test_embedding 256-dim
-test_file = './dev/data/model_lookup_test.pkl'
-with open (test_file, 'rb') as file:
-    test_data = pickle.load(file)
-
-# test_labels
-labels_file = './dev/data/pred_rxn_EC123/labels_test_ec3.pkl'
-with open (labels_file, 'rb') as file:
-    test_labels = pickle.load(file)
-
-
-test_data = np.r_[test_data[:100], test_data[-50:]]
-test_labels = test_labels[:100] + test_labels[-50:]
-```
-
-**4.如果你要预测一条或多条序列的EC，你可以使用`CLAIRE/dev/data/embedding/embedding.py`对你的序列进行编码**
+**2.Make predictions for a list of reactions in SMILES format**
 
 ***rxnfp Embedding：***
 
-测试一条：传入字符串
+Note that multiple reactants and products are seaparated by "."; reactants and products are separated by ">>".
+
+
 ```python
-example_rxn = "C/C(C=O)=C\CC/C(C)=C/C=O.NC(=O)c1ccc[n+]([C@@H]2O[C@H](COP(=O)([O-])OP(=O)([O-])OC[C@H]3O[C@@H](n4cnc5c(N)ncnc54)[C@H](O)[C@@H]3O)[C@@H](O)[C@H]2O)c1.[H+].O>>COC(=O)CCCCCCCC=O"
-rxnfp = rxnfp_generator.convert(example_rxn)
-```
-测试多条：传入列表，每个 rxn 用“`，`”隔开。
-```python
-example_rxn = [" ", " ", " ", " ", " "]
-rxnfp = rxnfp_generator.convert_batch(example_rxn)
+example_rxns = ["NC(=O)c1ccc[n+]([C@@H]2O[C@H](COP(=O)(O)OP(=O)(O)OC[C@H]3O[C@@H](n4cnc5c(N)ncnc54)[C@H](O)[C@@H]3O)[C@@H](O)[C@H]2O)c1.NCCC=O.O>>NCCC(=O)O", "C=C(C)CCOP(=O)([O-])OP(=O)([O-])[O-].CC(C)=CCOP(=O)(O)OP(=O)(O)O>>CC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCOP(=O)(O)OP(=O)(O)O", "N.NC(=O)C1=CN([C@@H]2O[C@H](COP(=O)(O)OP(=O)(O)OC[C@H]3O[C@@H](n4cnc5c(N)ncnc54)[C@H](OP(=O)(O)O)[C@@H]3O)[C@@H](O)[C@H]2O)C=CC1.O=C([O-])CCC(=O)C(=O)[O-].[H+]>>N[C@@H](CCC(=O)[O-])C(=O)[O-]"]
+rxnfp = rxnfp_generator.convert_batch(example_rxns)
 ```
 
 ***drfp embedding***
 
-```python
-### drfp embedding
-
-## 安装 drfp 环境
-# pip install drfp
-
-# 命令行运行命令：drfp my_rxn_smiles.txt my_rxn_fps.pkl -d 256
-# 其中，将my_rxn_smiles.txt替换为自己的rxn序列文件地址，my_rxn_fps.pkl 替换为保存的embedding的地址。
-# -d 为生成的embedding维度
+save the reaction SMILES in "my_rxn_smiles.txt", then run the following to save drfp embeddings in "my_rxn_fps.pkl"
 ```
-
+drfp my_rxn_smiles.txt my_rxn_fps.pkl -d 256
+```
+where -d is the dimension of the embeddings
 
 ***concat rxnfp and drfp***
 
