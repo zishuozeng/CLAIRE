@@ -1,8 +1,6 @@
 ﻿# CLAIRE
 Contrastive Learning-based AnnotatIon for Reaction's Ec number
 
-@[TOC](目录)
-
 ## 1.安装环境
 ```
 cd CLAIRE/
