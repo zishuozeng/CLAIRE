@@ -1,12 +1,13 @@
 ﻿# DEMO
 你可以通过运行 `CLAIRE/DEMO.py` 初步使用
+
 **环境安装**
 ```
 conda activate rxnfp
 cd CLAIRE/
 python DEMO.py
 ```
-首先，导入训练数据
+1.首先，导入训练数据
 ```python
 ### train data
 # train_embedding 512-dim
@@ -20,7 +21,7 @@ with open (labels_file, 'rb') as file:
     train_labels = pickle.load(file)
 ```
 
-你可以使用我们的测试数据进行初步测试。
+2.你可以使用我们的测试数据进行初步测试。
 ```python
 ### use our test data
 # test_embedding 256-dim
@@ -38,7 +39,7 @@ test_data = np.r_[test_data[:100], test_data[-50:]]
 test_labels = test_labels[:100] + test_labels[-50:]
 ```
 
-如果你要预测一条或多条序列的EC，你可以使用`CLAIRE/dev/data/embedding/embedding.py`对你的序列进行编码
+3.如果你要预测一条或多条序列的EC，你可以使用`CLAIRE/dev/data/embedding/embedding.py`对你的序列进行编码
 **rxnfp Embedding：**
 测试一条：传入字符串
 ```python
@@ -64,9 +65,7 @@ rxnfp = rxnfp_generator.convert_batch(example_rxn)
 # -d 为生成的embedding维度
 ```
 
-
 **concat rxnfp and drfp**
-
 ```python
 test_data = []
 for ind, item in enumerate(rxnfp):
@@ -75,6 +74,7 @@ for ind, item in enumerate(rxnfp):
 test_data = np.concatenate(test_data,axis=0)
 ```
 
+4.预测
 **Inference：**
 ```python
 # EC calling results using maximum separation
