@@ -1,5 +1,6 @@
 ﻿# DEMO
 你可以通过运行 `CLAIRE/DEMO.py` 初步使用
+**环境安装**
 ```
 conda activate rxnfp
 cd CLAIRE/
