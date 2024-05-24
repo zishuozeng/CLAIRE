@@ -1,11 +1,14 @@
 ﻿# DEMO
 你可以通过运行 `CLAIRE/DEMO.py` 初步使用
+
+**1.环境配置**
 ```
 conda activate rxnfp
 cd CLAIRE/
 python DEMO.py
 ```
-首先，导入训练数据
+
+**2.导入训练数据**
 ```python
 ### train data
 # train_embedding 512-dim
@@ -19,7 +22,7 @@ with open (labels_file, 'rb') as file:
     train_labels = pickle.load(file)
 ```
 
-你可以使用我们的测试数据进行初步测试。
+**3.你可以使用我们的测试数据进行初步测试**
 ```python
 ### use our test data
 # test_embedding 256-dim
@@ -37,8 +40,8 @@ test_data = np.r_[test_data[:100], test_data[-50:]]
 test_labels = test_labels[:100] + test_labels[-50:]
 ```
 
-如果你要预测一条或多条序列的EC，你可以使用`CLAIRE/dev/data/embedding/embedding.py`对你的序列进行编码
-**rxnfp Embedding：**
+**4.如果你要预测一条或多条序列的EC，你可以使用`CLAIRE/dev/data/embedding/embedding.py`对你的序列进行编码**
+***rxnfp Embedding：***
 测试一条：传入字符串
 ```python
 example_rxn = "C/C(C=O)=C\CC/C(C)=C/C=O.NC(=O)c1ccc[n+]([C@@H]2O[C@H](COP(=O)([O-])OP(=O)([O-])OC[C@H]3O[C@@H](n4cnc5c(N)ncnc54)[C@H](O)[C@@H]3O)[C@@H](O)[C@H]2O)c1.[H+].O>>COC(=O)CCCCCCCC=O"
@@ -50,7 +53,7 @@ example_rxn = [" ", " ", " ", " ", " "]
 rxnfp = rxnfp_generator.convert_batch(example_rxn)
 ```
 
-**drfp embedding**
+***drfp embedding***
 
 ```python
 ### drfp embedding
@@ -64,7 +67,7 @@ rxnfp = rxnfp_generator.convert_batch(example_rxn)
 ```
 
 
-**concat rxnfp and drfp**
+***concat rxnfp and drfp***
 
 ```python
 test_data = []
@@ -74,7 +77,7 @@ for ind, item in enumerate(rxnfp):
 test_data = np.concatenate(test_data,axis=0)
 ```
 
-**Inference：**
+**5.Inference：**
 ```python
 # EC calling results using maximum separation
 infer_maxsep(train_data, test_data, train_labels, test_tags, test_labels, pretrained_model,out_filename='./dev/results/demo', gmm = './dev/GMM/gmm_ensumble.pkl')
