@@ -22,7 +22,7 @@ conda install pytorch==1.11.0 cudatoolkit=11.3 -c pytorch (GPU)
 train_augmented.csv 和 test_augmented.csv 为原始数据，model_lookup_train.pkl 和 model_lookup_test.pkl 为 rxn 的 embedding。
 embedding 文件夹为对 rxn 进行 embedding 的详细步骤，该部分内容将在 part 3 中详细介绍。
 pred_rxn_ECxxx 为对 ec 的三级划分，包含 labels 和 esm_emb ：{‘EC1’:[tensor1, tensor2, ... ,], ’EC2’:[tensor1, tensor2, ... ] ... .....}
-yeast 文件夹中包含原始数据以及 positive 和 negative 的 embedding
+yeast 文件夹中包含原始数据以及 positive 和 negative 的 embedding。
 ```
 ## 3.Embedding
 如果你想对自己的数据进行编码，可以参考`data/embedding/embedding.py` 文件，embedding 由 rxnfp_embedding 和 drfp_embedding 两部分组成。
