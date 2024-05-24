@@ -43,6 +43,7 @@ test_labels = test_labels[:100] + test_labels[-50:]
 **4.如果你要预测一条或多条序列的EC，你可以使用`CLAIRE/dev/data/embedding/embedding.py`对你的序列进行编码**
 
 ***rxnfp Embedding：***
+
 测试一条：传入字符串
 ```python
 example_rxn = "C/C(C=O)=C\CC/C(C)=C/C=O.NC(=O)c1ccc[n+]([C@@H]2O[C@H](COP(=O)([O-])OP(=O)([O-])OC[C@H]3O[C@@H](n4cnc5c(N)ncnc54)[C@H](O)[C@@H]3O)[C@@H](O)[C@H]2O)c1.[H+].O>>COC(=O)CCCCCCCC=O"
