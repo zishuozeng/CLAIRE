@@ -125,9 +125,8 @@ def infer_maxsep(train_data, test_data, train_tags, test_tags, test_labels, pret
     seed_everything()
     eval_df = pd.DataFrame.from_dict(eval_dist)
 
-    print('===========================')
     write_topk_choices(eval_df, out_filename, topk=topk, gmm=gmm)
-    print(out_filename)
+
     #精度验证
     if report_metrics:
         pred_label = get_pred_labels(out_filename, pred_type='_prediction')
