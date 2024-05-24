@@ -41,6 +41,7 @@ test_labels = test_labels[:100] + test_labels[-50:]
 ```
 
 **4.如果你要预测一条或多条序列的EC，你可以使用`CLAIRE/dev/data/embedding/embedding.py`对你的序列进行编码**
+
 ***rxnfp Embedding：***
 测试一条：传入字符串
 ```python
