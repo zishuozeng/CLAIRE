@@ -34,12 +34,9 @@ yeast 文件夹中包含原始数据以及 positive 和 negative 的 embedding�
 生成的 embeddings 保存至 `CLAIRE/dev/data/embedding/rxnfp`文件夹下。
 
 **rxnfp 运行环境**
+在命令行输入以下命令，安装 rxnfp 的运行环境
 ```
-conda create -n rxnfp python=3.6 -y
-conda activate rxnfp
-conda install -c rdkit rdkit=2020.03.3 -y
-conda install -c tmap tmap -y
-pip install rxnfp
+bash rxnfp_env.sh
 ```
 
 **rxnfp 使用方式**
