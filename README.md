@@ -30,7 +30,7 @@ bash rxnfp_env.sh
 
 **(1). Run DRFP embeddings**
 
-Suppose you have the following query reactions to be predicted, saved in a txt file (my_rxn_smiles.txt). 
+Suppose you have the three following query reactions to be predicted, saved in a txt file ("my_rxn_smiles.txt"). 
 Note that multiple reactants and products are seaparated by "."; reactants and products are separated by ">>".
 
 ```txt
