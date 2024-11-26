@@ -131,7 +131,6 @@ def train(model, args, epoch, train_loader,
 
 def main():
     seed_everything()
-    ensure_dirs('./data/model')
     args = parse()
     torch.backends.cudnn.benchmark = True
     #======================== override args ====================#
