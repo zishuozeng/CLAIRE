@@ -11,7 +11,7 @@ Training and testing data are placed under `CLAIRE/dev/data`
 ## 3.Embedding
 Reaction embedding can be done following the script `data/embedding/embedding.py`.
 
-## 5.Training
+## 4.Training
 
 Run the following script to train the model
 
@@ -21,7 +21,7 @@ python CLAIRE/dev/training/train-triplet_pred_rxn_EC.py
 
 The trained model is saved at `CLAIRE/dev/results/model`
 
-## 6.Inference
+## 5.Inference
 Run the script `CLAIRE/dev/prediction/inference_EC.py` to make predictions for reaction's EC number,
 
 or follow `CLAIRE/README.md` to make prediction step by step.
