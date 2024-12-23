@@ -16,7 +16,7 @@ Reaction embedding can be done following the script `data/embedding/embedding.py
 Run the following script to train the model
 
 ```
-python CLAIRE/dev/training/train-triplet_pred_rxn_EC.py
+python CLAIRE/dev/training/train-pred_rxn_EC.py
 ```
 
 The trained model is saved at `CLAIRE/dev/results/model`
