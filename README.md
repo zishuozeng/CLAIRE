@@ -76,7 +76,7 @@ rxnfp = rxnfp_generator.convert_batch(example_rxns)
 **(3). Concatenate the rxnfp and drfp embeddings**
 
 ```python
-my_rxn_fps = pickle.load(open('my_rxn_fps.pkl', 'rb'))
+drfp = pickle.load(open('my_rxn_fps.pkl', 'rb'))
 test_data = []
 
 for ind, item in enumerate(rxnfp):
