@@ -55,6 +55,7 @@ where -d is the dimension of the embeddings
 **(2). Run rxnfp embeddings**
 
 Activate the rxnfp environment:
+
 In Python, import the relevant packages
 ```python
 from dev.prediction.inference_EC import inference
@@ -89,6 +90,7 @@ for ind, item in enumerate(rxnfp):
 test_data = np.concatenate(test_data,axis=0)
 ```
 **(4). Make predictions on the concatenated embeddings**
+
 Activate the claire environment:
 ```python
 train_data = pickle.load(open ('data/model_lookup_train.pkl', 'rb'))
