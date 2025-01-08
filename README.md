@@ -55,8 +55,8 @@ where -d is the dimension of the embeddings
 **(2). Run rxnfp embeddings**
 
 In Python, import the relevant packages
-```
-from dev.prediction.inference_EC import infer_maxsep
+```python
+from dev.prediction.inference_EC import inference
 import pickle
 import numpy as np
 import pandas as pd
@@ -66,8 +66,7 @@ from rxnfp.transformer_fingerprints import (
 ```
 
 compute for the rxnfp embeddings
-
-```
+```python
 model, tokenizer = get_default_model_and_tokenizer()
 rxnfp_generator = RXNBERTFingerprintGenerator(model, tokenizer)
 example_rxns = ["NC(=O)c1ccc[n+]([C@@H]2O[C@H](COP(=O)(O)OP(=O)(O)OC[C@H]3O[C@@H](n4cnc5c(N)ncnc54)[C@H](O)[C@@H]3O)[C@@H](O)[C@H]2O)c1.NCCC=O.O>>NCCC(=O)O", "C=C(C)CCOP(=O)([O-])OP(=O)([O-])[O-].CC(C)=CCOP(=O)(O)OP(=O)(O)O>>CC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCOP(=O)(O)OP(=O)(O)O", "N.NC(=O)C1=CN([C@@H]2O[C@H](COP(=O)(O)OP(=O)(O)OC[C@H]3O[C@@H](n4cnc5c(N)ncnc54)[C@H](OP(=O)(O)O)[C@@H]3O)[C@@H](O)[C@H]2O)C=CC1.O=C([O-])CCC(=O)C(=O)[O-].[H+]>>N[C@@H](CCC(=O)[O-])C(=O)[O-]"]
