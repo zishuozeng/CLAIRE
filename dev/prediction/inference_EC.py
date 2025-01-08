@@ -1,7 +1,7 @@
 import torch
 import sys
 sys.path.append('/root/CLAIRE')
-from dev.Utils.utils import *
+from dev.utils.utils import *
 import pandas as pd
 import torch.nn as nn
 from sklearn.metrics import  accuracy_score, f1_score
