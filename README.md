@@ -88,7 +88,7 @@ test_data = np.concatenate(test_data,axis=0)
 **(4). Make predictions on the concatenated embeddings**
 ```python
 # EC calling results using maximum separation
-result = inference(train_data, test_data, train_labels, test_tags, test_labels, pretrained_model, evaluation=True, topk=3, gmm = '../gmm/gmm_ensumble.pkl')
+result = inference(train_data, test_data, train_labels, test_tags, test_labels, pretrained_model, gmm = '../gmm/gmm_ensumble.pkl')
 ```
 
 This project uses part of codes (the gmm functions) from the [*CLEAN*](https://github.com/tttianhao/CLEAN/) software developed by the Department of Chemical and Biomolecular Engineering at the University of Illinois Urbana-Champaign.
