@@ -1,6 +1,7 @@
 import torch
-from src.CLAIRE.utils import * 
-from src.CLAIRE.evaluate import *
+import sys
+sys.path.append('/root/CLAIRE')
+from dev.utils.utils import *
 from sklearn import mixture
 import torch.nn as nn
 import matplotlib.pyplot as plt
@@ -17,11 +18,15 @@ class LayerNormNet(nn.Module):
         self.device = device
         self.dtype = dtype
 
-        self.fc1 = nn.Linear(256, hidden_dim, dtype=dtype, device=device)
+        self.fc1 = nn.Linear(512, hidden_dim, dtype=dtype, device=device)
         self.ln1 = nn.LayerNorm(hidden_dim, dtype=dtype, device=device)
-        self.fc2 = nn.Linear(hidden_dim, hidden_dim, dtype=dtype, device=device)
+        self.fc2 = nn.Linear(hidden_dim, hidden_dim,dtype=dtype, device=device)
         self.ln2 = nn.LayerNorm(hidden_dim, dtype=dtype, device=device)
         self.fc3 = nn.Linear(hidden_dim, out_dim, dtype=dtype, device=device)
+        self.fc4 = nn.Linear(hidden_dim, hidden_dim, dtype=dtype, device=device)
+        self.ln4 = nn.LayerNorm(hidden_dim, dtype=dtype, device=device)
+        self.fc5 = nn.Linear(hidden_dim, hidden_dim, dtype=dtype, device=device)
+        self.ln5 = nn.LayerNorm(hidden_dim, dtype=dtype, device=device)
         self.dropout = nn.Dropout(p=drop_out)
 
     def forward(self, x):
@@ -29,6 +34,11 @@ class LayerNormNet(nn.Module):
         x = torch.relu(x)
         x = self.dropout(self.ln2(self.fc2(x)))
         x = torch.relu(x)
+        x = self.dropout(self.ln4(self.fc4(x)))
+        x = torch.relu(x)
+        x = self.dropout(self.ln5(self.fc5(x)))
+        x = torch.relu(x)
+
         x = self.fc3(x)
         return x
 
@@ -58,7 +68,7 @@ def get_dist(ec, train_data,train_labels, esm_emb, pretrained_model = None, neg_
     use_cuda = torch.cuda.is_available()
     device = torch.device("cuda:0" if use_cuda else "cpu")
     dtype = torch.float32
-    model = LayerNormNet(512, 128, device, dtype)   
+    model = LayerNormNet(1280, 128, device, dtype)   
 
     checkpoint = torch.load(pretrained_model)
     model.load_state_dict(checkpoint)
@@ -94,17 +104,17 @@ def get_dist(ec, train_data,train_labels, esm_emb, pretrained_model = None, neg_
     return distances, neg_distances
 
 
-esm_emb = pickle.load(open('./data/inputs/pred_rxn_EC12/esm_emb_dict.pkl', 'rb'))
+esm_emb = pickle.load(open('../data/pred_rxn_EC123/esm_emb_dict_ec3.pkl', 'rb'))
 
-train_file = './data/inputs/pred_rxn_EC12/model_lookup_train.pkl'
+train_file = '../data/model_lookup_train.pkl'
 with open (train_file, 'rb') as file:
     train_data = pickle.load(file)
 
-labels_file = './data/inputs/pred_rxn_EC12/labels_train.pkl'
+labels_file = '../data/pred_rxn_EC123/labels_train_ec3.pkl'
 with open (labels_file, 'rb') as file:
     train_labels = pickle.load(file)
 
-pretrained_model = './data/model/pred_rxn_EC12/random_10-4_triplet2000_final.pth'
+pretrained_model = '../results/model/pred_rxn_EC123/layer5_node1280_triplet2000_final.pth'
 
 main_GMM_list = []
 # counter = 0
@@ -124,5 +134,5 @@ for i in range(40):
     main_GMM_list.append(main_GMM)
 
     plt.hist(all_distance, bins = 500, alpha = 0.5)
-    plt.savefig('./data/pretrained/gmm_hist/GMM_100_500_' + str(i) + '.png')
-pickle.dump(main_GMM_list, open('./data/pretrained/GMM.pkl', 'wb'))
+    # plt.savefig('GMM_100_500_' + str(i) + '.png')
+pickle.dump(main_GMM_list, open('GMM.pkl', 'wb'))
