@@ -87,8 +87,16 @@ test_data = np.concatenate(test_data,axis=0)
 ```
 **(4). Make predictions on the concatenated embeddings**
 ```python
+
+train_data = pickle.load(open ('data/model_lookup_train.pkl', 'rb'))
+train_labels = pickle.load(open ('data/pred_rxn_EC123/labels_train_ec3.pkl', 'rb'))
+# input your test_labels
+test_labels = None
+test_tags = ['rxn_' + str(i) for i in range(len(test_data))]
+
 # EC calling results using maximum separation
-result = inference(train_data, test_data, train_labels, test_tags, test_labels, pretrained_model, gmm = '../gmm/gmm_ensumble.pkl')
+pretrained_model = '../results/model/pred_rxn_EC123/layer5_node1280_triplet2000_final.pth'
+inference(train_data, test_data, train_labels, test_tags,test_labels, pretrained_model, evaluation=True, topk=3, gmm = '../gmm/gmm_ensumble.pkl')
 ```
 
 This project uses part of codes (the gmm functions) from the [*CLEAN*](https://github.com/tttianhao/CLEAN/) software developed by the Department of Chemical and Biomolecular Engineering at the University of Illinois Urbana-Champaign.
