@@ -54,6 +54,7 @@ where -d is the dimension of the embeddings
 
 **(2). Run rxnfp embeddings**
 
+Activate the rxnfp environment:
 In Python, import the relevant packages
 ```python
 from dev.prediction.inference_EC import inference
@@ -71,12 +72,14 @@ model, tokenizer = get_default_model_and_tokenizer()
 rxnfp_generator = RXNBERTFingerprintGenerator(model, tokenizer)
 example_rxns = ["NC(=O)c1ccc[n+]([C@@H]2O[C@H](COP(=O)(O)OP(=O)(O)OC[C@H]3O[C@@H](n4cnc5c(N)ncnc54)[C@H](O)[C@@H]3O)[C@@H](O)[C@H]2O)c1.NCCC=O.O>>NCCC(=O)O", "C=C(C)CCOP(=O)([O-])OP(=O)([O-])[O-].CC(C)=CCOP(=O)(O)OP(=O)(O)O>>CC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCCC(C)=CCOP(=O)(O)OP(=O)(O)O", "N.NC(=O)C1=CN([C@@H]2O[C@H](COP(=O)(O)OP(=O)(O)OC[C@H]3O[C@@H](n4cnc5c(N)ncnc54)[C@H](OP(=O)(O)O)[C@@H]3O)[C@@H](O)[C@H]2O)C=CC1.O=C([O-])CCC(=O)C(=O)[O-].[H+]>>N[C@@H](CCC(=O)[O-])C(=O)[O-]"]
 rxnfp = rxnfp_generator.convert_batch(example_rxns)
+pickle.dump(rxnfp, open('rxnfp_emb.pkl', 'wb'))
 ```
 
 **(3). Concatenate the rxnfp and drfp embeddings**
 
 ```python
 drfp = pickle.load(open('my_rxn_fps.pkl', 'rb'))
+rxnfp = pickle.load(open('rxnfp_emb.pkl', 'rb'))
 test_data = []
 
 for ind, item in enumerate(rxnfp):
@@ -86,8 +89,8 @@ for ind, item in enumerate(rxnfp):
 test_data = np.concatenate(test_data,axis=0)
 ```
 **(4). Make predictions on the concatenated embeddings**
+Activate the claire environment:
 ```python
-
 train_data = pickle.load(open ('data/model_lookup_train.pkl', 'rb'))
 train_labels = pickle.load(open ('data/pred_rxn_EC123/labels_train_ec3.pkl', 'rb'))
 # input your test_labels
