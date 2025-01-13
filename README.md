@@ -1,7 +1,7 @@
 
 This repository includes codes to run the model in paper
 
-_CLAIRE: A Contrastive Learning-based Predictor for EC number of chemical reactions_
+[*CLAIRE: A Contrastive Learning-based Predictor for EC number of chemical reactions*](https://doi.org/10.1186/s13321-024-00944-8 )
 
 to predict EC numbers for chemical reactions. 
 
