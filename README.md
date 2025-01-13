@@ -111,5 +111,6 @@ test_tags = ['rxn_' + str(i) for i in range(len(test_data))]
 pretrained_model = '../results/model/pred_rxn_EC123/layer5_node1280_triplet2000_final.pth'
 inference(train_data, test_data, train_labels, test_tags,test_labels, pretrained_model, evaluation=True, topk=3, gmm = '../gmm/gmm_ensumble.pkl')
 ```
+The prediction results are saved in `dev/test_prediction.csv`.
 
 This project uses part of codes (the gmm functions) from the [*CLEAN*](https://github.com/tttianhao/CLEAN/) software developed by the Department of Chemical and Biomolecular Engineering at the University of Illinois Urbana-Champaign.
