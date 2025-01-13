@@ -27,13 +27,21 @@ bash rxnfp_env.sh
 ```
 
 # 2.Data
-You can download the data ([*inputs*](https://zenodo.org/records/14635841)) and place it in the `CLAIRE/dev/` directory, which contains 'train_augmented.csv', 'test_augmented.csv', 'model_lookup' and 'embedding'.
-```
--train_augmented.csv and test_augmented.csv are the raw data, and model_lookup_train.pkl and model_lookup_test.pkl are the embedding of rxn.
--The embedding folder is a detailed procedure for embedding the rxn.
--pred_rxn_ECxxx is a three-level division of ec, consisting of labels and esm_emb :{'EC1':[tensor1, tensor2, ... ,], 'EC2':[tensor1, tensor2, ... ... .....}.esm_emb is for training purposes only
--predictable_EC.csv is a predictable EC number file
-```
+You can download the ([*data*](https://zenodo.org/records/14635841)) and place it under the `CLAIRE/dev/` directory. The descriptions and purposes for the downloaded files are the following.
+
+`data/embedding`: reaction embeddings from two schemes (DRFP and rxnfp), as well as the python scripts to obtain them;
+
+`data/pred_rxn_ECx`: esm_emb (a dictionary for reaction SMILES and embeddings mapping), labels of testing and training sets; "x" here denotes different levels of EC numbers (first digit, two digits, three digits).
+
+`data/model_lookup_test.pkl`: the featurized testing set (after embedding) in a matrix;
+
+`data/model_lookup_train.pkl`: the featurized training set (after embedding) in a matrix **[NOTE: this file is needed for predictions]**;
+
+`data/test_augmented.csv`: testing set augmented samples in reaction SMILES format and their corresponding EC labels;
+
+`data/train_augmented.csv`: training set augmented samples in reaction SMILES format and their corresponding EC labels;
+
+`data/predictable_EC.csv`: EC numbers that are in the scope of our model. **[NOTE: CLAIRE cannot predict EC numbers beyond this list]**.
 
 # 3.How to use
 
@@ -103,7 +111,7 @@ test_data = np.concatenate(test_data,axis=0)
 Activate the claire environment:
 ```python
 train_data = pickle.load(open ('data/model_lookup_train.pkl', 'rb'))
-train_labels = pickle.load(open ('data/pred_rxn_EC123/labels_train_ec3.pkl', 'rb'))
+train_labels = pickle.load(open ('data/pred_rxn_EC123/labels_train_ec3.pkl', 'rb')) #if you want 1-level EC or 2-level EC, change it to pred_rxn_EC1/labels_trained_ec1.pkl or pred_rxn_EC12/labels_trained_ec2.pkl, resepetively.
 # input your test_labels
 test_labels = None
 test_tags = ['rxn_' + str(i) for i in range(len(test_data))]
