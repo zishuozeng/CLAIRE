@@ -31,7 +31,7 @@ You can download the data ([*inputs*](https://zenodo.org/records/14635841)) and 
 ```
 -train_augmented.csv and test_augmented.csv are the raw data, and model_lookup_train.pkl and model_lookup_test.pkl are the embedding of rxn.
 -The embedding folder is a detailed procedure for embedding the rxn.
--pred_rxn_ECxxx is a three-level division of ec, consisting of labels and esm_emb :{'EC1':[tensor1, tensor2, ... ,], 'EC2':[tensor1, tensor2, ... ... .....}
+-pred_rxn_ECxxx is a three-level division of ec, consisting of labels and esm_emb :{'EC1':[tensor1, tensor2, ... ,], 'EC2':[tensor1, tensor2, ... ... .....}.esm_emb is for training purposes only
 ```
 
 # 3.How to use
