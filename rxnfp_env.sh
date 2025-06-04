@@ -9,3 +9,4 @@ source activate rxnfp
 # 安装必要的包
 conda install -c rdkit rdkit=2020.03.3 -y
 conda install -c tmap tmap -y
+pip install rxnfp
